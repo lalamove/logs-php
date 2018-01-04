@@ -1,0 +1,23 @@
+{
+    "name": "lalamove/logs-php",
+    "description": "Php logger based on Lalamove k8s logging format",
+    "type": "library",
+    "autoload": {
+        "psr-4": { "Lalamove\\Logger\\": "src/" }
+    },
+    "require": {
+        "monolog/monolog": "^1.23"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "mockery/mockery": "0.9.*",
+        "webpatser/laravel-uuid": "2.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Francois Parquet",
+            "email": "francoisparquet@lalamove.com"
+        }
+    ]
+}
