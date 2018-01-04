@@ -8,7 +8,6 @@ use Lalamove\Logger\CustomHandler;
 use Lalamove\Logger\HumanReadableFormatter;
 
 use Mockery;
-use Webpatser\Uuid\Uuid;
 use Monolog\Formatter\JsonFormatter;
 use PHPUnit_Framework_TestCase;
 
@@ -41,7 +40,7 @@ class LoggerTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $uuid = Uuid::generate();
+        $uuid = "DUMMYUUID";
         if (!defined('FOOTPRINT')) {
             define('FOOTPRINT', $uuid);
         }
@@ -118,7 +117,7 @@ class LoggerTest extends PHPUnit_Framework_TestCase
         
         $uuid;
         if (!defined('FOOTPRINT')) {
-            $uuid = Uuid::generate();
+            $uuid = "DUMMYUUID";
             define('FOOTPRINT', $uuid);
         } else {
             $uuid = FOOTPRINT;

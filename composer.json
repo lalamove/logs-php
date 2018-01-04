@@ -2,6 +2,12 @@
     "name": "lalamove/logs-php",
     "description": "Php logger based on Lalamove k8s logging format",
     "type": "library",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/lalamove/logs-php"
+        }
+    ],
     "autoload": {
         "psr-4": { "Lalamove\\Logger\\": "src/" }
     },
@@ -10,8 +16,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
-        "mockery/mockery": "0.9.*",
-        "webpatser/laravel-uuid": "2.*"
+        "mockery/mockery": "0.9.*"
     },
     "license": "MIT",
     "authors": [
