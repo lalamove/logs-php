@@ -58,11 +58,13 @@ app()->singleton("Logger", function ($app) {
     return $logger;
 });
 ```
+
 Then later use it this way:
 ```php
 $logger = app()->make("Logger");
 $logger->info("Hello world", [ "some" => "context" ]);
 ```
+
 If you log exceptions, backtrace will be added automatically to the log context,
 example:
 ```php
@@ -90,5 +92,21 @@ $logger->error($e, [ "foo" => "bar" ]);
     #9 ./vendor/phpunit/phpunit/src/TextUI/Command.php(100): PHPUnit_TextUI_Command->run(Array, true)
     #10 ./vendor/phpunit/phpunit/phpunit(52): PHPUnit_TextUI_Command::main()
     #11 {main}
+*/
+```
+
+If the global constant FOOTPRINT is defined, it will be added to the context:
+```php
+define("FOOTPRINT", "SOMEFOOTPRINT");
+$logger->info("foobar");
+/*
+2017-12-27T10:27:21.83689928800Z | INFO | foobar
+    message : foobar
+    src_file : ./LoggerTest.php
+    src_line : 39
+    level : INFO
+    time : 2017-12-27T10:27:21.83689928800Z
+    context :
+        footprint : SOMEFOOTPRINT
 */
 ```
