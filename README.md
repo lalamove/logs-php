@@ -58,3 +58,37 @@ app()->singleton("Logger", function ($app) {
     return $logger;
 });
 ```
+Then later use it this way:
+```php
+$logger = app()->make("Logger");
+$logger->info("Hello world", [ "some" => "context" ]);
+```
+If you log exceptions, backtrace will be added automatically to the log context,
+example:
+```php
+$e = new \Exception("some exception");
+$logger->error($e);
+/*
+2017-12-27T10:27:21.83689928800Z | ERROR | some exception
+    message : some exception
+    src_file : ./LoggerTest.php
+    src_line : 39
+    level : ERROR
+    time : 2017-12-27T10:27:21.83689928800Z
+    context :
+        foo : bar
+
+    backtrace : #0 [internal function]: Lalamove\LoggerTest->testLogInfo()
+    #1 ./vendor/phpunit/phpunit/src/Framework/TestCase.php(909): ReflectionMethod->invokeArgs(Object(Lalamove\LoggerTest), Array)
+    #2 ./vendor/phpunit/phpunit/src/Framework/TestCase.php(768): PHPUnit_Framework_TestCase->runTest()
+    #3 ./vendor/phpunit/phpunit/src/Framework/TestResult.php(612): PHPUnit_Framework_TestCase->runBare()
+    #4 ./vendor/phpunit/phpunit/src/Framework/TestCase.php(724): PHPUnit_Framework_TestResult->run(Object(Lalamove\LoggerTest))
+    #5 ./vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestCase->run(Object(PHPUnit_Framework_TestResult))
+    #6 ./vendor/phpunit/phpunit/src/Framework/TestSuite.php(722): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
+    #7 ./vendor/phpunit/phpunit/src/TextUI/TestRunner.php(440): PHPUnit_Framework_TestSuite->run(Object(PHPUnit_Framework_TestResult))
+    #8 ./vendor/phpunit/phpunit/src/TextUI/Command.php(149): PHPUnit_TextUI_TestRunner->doRun(Object(PHPUnit_Framework_TestSuite), Array)
+    #9 ./vendor/phpunit/phpunit/src/TextUI/Command.php(100): PHPUnit_TextUI_Command->run(Array, true)
+    #10 ./vendor/phpunit/phpunit/phpunit(52): PHPUnit_TextUI_Command::main()
+    #11 {main}
+*/
+```
