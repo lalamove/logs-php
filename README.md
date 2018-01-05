@@ -67,7 +67,7 @@ If you log exceptions, backtrace will be added automatically to the log context,
 example:
 ```php
 $e = new \Exception("some exception");
-$logger->error($e);
+$logger->error($e, [ "foo" => "bar" ]);
 /*
 2017-12-27T10:27:21.83689928800Z | ERROR | some exception
     message : some exception

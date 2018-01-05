@@ -12,7 +12,7 @@ use Monolog\Formatter\JsonFormatter;
 //     "message": "", // string describing what happened
 //     "src_file": "", // file path
 //     "src_line": "", // line number
-//     "fields": {}, // custom field here
+//     "context": {}, // custom field here
 //     "level": "", // debug/info/warning/error/fatal
 //     "time": "", // ISO8601.nanoseconds+TZ (in node only support precision up to milliseconds)
 //     "backtrace": "" // err stack
