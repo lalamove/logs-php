@@ -58,32 +58,41 @@ class HumanReadableFormatter extends NormalizerFormatter
      * Formats a log record.
      *
      * @param array $record  A record to format
-     * @param mixed $prepend String to be prepended to logline (used for indentation)
-     * @param mixed $level   level in recursion
      *
      * @return mixed The formatted record
      */
-    public function format(array $record, $prepend = "  ", $level = 0)
+    public function format(array $record)
     {
-        $str = "";
-        if ($level === 0) {
-            $level = $record["level"];
-            $message = $record["message"];
-            $tmstp = $record["time"];
-            $str .= "\n$tmstp | $level | $message";
-        }
-        foreach ($record as $k => $v) {
-            if (!is_array($v) && !is_object($v)) {
-                $str .= "\n$prepend$k : $v";
-            } else {
-                $str .= "\n$prepend$k :";
-                // call format on subobj or array prepending with two more spaces
-                $str .= $this->format($v, $prepend."  ", $level + 1);
-            }
-        }
+        $level = $record["level"];
+        $message = $record["message"];
+        $tmstp = $record["time"];
+        $str = "\n$tmstp | $level | $message\n" . self::formatObject($record);
         // if color exists for log level, add color to text
         $str = $this->colorText($str."\n", $level);
         return $str;
+    }
+
+    private static function pad(int $size)
+    {
+        return join('', array_fill(0, $size, '  '));
+    }
+
+    private static function formatKeyValue($key, $value, int $indent = 0)
+    {
+        $padding = self::pad($indent);
+        return "$padding$key : $value";
+    }
+
+    private static function formatObject(array $record, int $indent = 0)
+    {
+        $ar = array_map(function ($val, $key) use ($indent) {
+            if (!is_array($val) && !is_object($val)) {
+                return self::formatKeyValue($key, $val, $indent + 1);
+            }
+            $padding = self::pad($indent + 1);
+            return "$padding$key :\n" . self::formatObject($val, $indent + 1);
+        }, $record, array_keys($record));
+        return join("\n", $ar);
     }
     
     /**
