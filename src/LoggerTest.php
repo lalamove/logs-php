@@ -478,8 +478,8 @@ class LoggerTest extends PHPUnit_Framework_TestCase
             "  context :\n".
             "    foo : bar\n".
             "    timestamp : test\n".
-            "    footprint : $this->footprint\n\n\n".
-            "\ntest | NONDEFINEDCOLOR | testMessage\n".
+            "    footprint : $this->footprint\n".
+            "\n\ntest | NONDEFINEDCOLOR | testMessage\n".
             "  message : testMessage\n".
             "  src_file : testFile\n".
             "  src_line : 15\n".
@@ -488,7 +488,7 @@ class LoggerTest extends PHPUnit_Framework_TestCase
             "  context :\n".
             "    foo : bar\n".
             "    timestamp : test\n".
-            "    footprint : $this->footprint\n\n";
+            "    footprint : $this->footprint\n";
         $this->assertEquals($str, $expectedStr);
     }
 }
