@@ -59,18 +59,18 @@ class HumanReadableFormatter extends NormalizerFormatter
      *
      * @param array $record  A record to format
      * @param mixed $prepend String to be prepended to logline (used for indentation)
-     * @param mixed $level   level in recursion
+     * @param int $indent   level in recursion
      *
      * @return mixed The formatted record
      */
-    public function format(array $record, $prepend = "  ", $level = 0)
+    public function format(array $record, $prepend = "  ", int $indent = 0)
     {
         $str = "";
-        if ($level === 0) {
-            $level = $record["level"];
+        if ($indent === 0) {
+            $loglevel = $record["level"];
             $message = $record["message"];
             $tmstp = $record["time"];
-            $str .= "\n$tmstp | $level | $message";
+            $str .= "\n$tmstp | $loglevel | $message";
         }
         foreach ($record as $k => $v) {
             if (!is_array($v) && !is_object($v)) {
@@ -78,11 +78,13 @@ class HumanReadableFormatter extends NormalizerFormatter
             } else {
                 $str .= "\n$prepend$k :";
                 // call format on subobj or array prepending with two more spaces
-                $str .= $this->format($v, $prepend."  ", $level + 1);
+                $str .= $this->format($v, $prepend."  ", $indent + 1);
             }
         }
         // if color exists for log level, add color to text
-        $str = $this->colorText($str."\n", $level);
+        if ($indent === 0) {
+            $str = $this->colorText($str."\n", $loglevel);
+        }
         return $str;
     }
     
