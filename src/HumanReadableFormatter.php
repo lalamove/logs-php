@@ -63,10 +63,10 @@ class HumanReadableFormatter extends NormalizerFormatter
      *
      * @return mixed The formatted record
      */
-    public function format(array $record, $prepend = "  ", $level = 0)
+    public function format(array $record, $prepend = "  ", $level = "INFO", $indent = 0)
     {
         $str = "";
-        if ($level === 0) {
+        if ($indent === 0) {
             $level = $record["level"];
             $message = $record["message"];
             $tmstp = $record["time"];
@@ -78,7 +78,7 @@ class HumanReadableFormatter extends NormalizerFormatter
             } else {
                 $str .= "\n$prepend$k :";
                 // call format on subobj or array prepending with two more spaces
-                $str .= $this->format($v, $prepend."  ", $level + 1);
+                $str .= $this->format($v, $prepend."  ", $level, $indent + 1);
             }
         }
         // if color exists for log level, add color to text
